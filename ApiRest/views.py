@@ -242,6 +242,6 @@ def Test(request):
         
         b2 = Contact(WebUrl='Cheddar Talk', phoneNumber='Thoughts on cheese.',Email='nanana')
 
-        Coworking_instance = Coworking.set(Contact=b2)
+        #Coworking_instance = Coworking.set(Contact=b2)
         
         return Response({"msg":"post"},status=200)
