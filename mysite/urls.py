@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index),
     path('changequota/',views.changequota_user),
-    path('Registeruser/',views.Register_user),
+    path('Registeruser/',views.Register_user),### githubtestcvbcvbvc
+    path('',views.Test),### main
 ]
