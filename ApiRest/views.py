@@ -6,6 +6,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from ApiRest.utils import *
+from ApiRest.models import *
 
 # Create your views here.
 def index(request):
@@ -239,6 +240,8 @@ def Test(request):
 
     if request.method == 'POST':
         
-        
+        b2 = Contact(WebUrl='Cheddar Talk', phoneNumber='Thoughts on cheese.',Email='nanana')
+
+        Coworking_instance = Coworking.set(Contact=b2)
         
         return Response({"msg":"post"},status=200)
