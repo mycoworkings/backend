@@ -260,8 +260,9 @@ def Test(request):
           
           Contact_arrray = Contact.objects.all()
           Coworking_arrray = Coworking.objects.all()
-          serialized_obj = serializers.serialize('json', [ Coworking_arrray[0], ])
-          #serialized_obj = serializers.serialize('json', [ Contact_arrray[0], ])
+          serialized_obj = serializers.serialize('json', [ Coworking_arrray[0].Contact, ])
+          Coworking_instance_search = Coworking.objects.filter(pk=Coworking_arrray[0].pk)
+          #serialized_obj = serializers.serialize('json', [ Coworking_instance_search.first().Contact, ])
 
           Contact_instance = Contact.objects.filter(pk=Contact_arrray[1].pk)
           #serialized_obj = serializers.serialize('json', [ Contact_instance.first(), ])
