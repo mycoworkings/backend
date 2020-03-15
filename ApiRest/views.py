@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from ApiRest.utils import *
 from ApiRest.models import *
+from django.core import serializers
 
 # Create your views here.
 def index(request):
@@ -239,9 +240,33 @@ def Test(request):
 
 
     if request.method == 'POST':
-        
-        b2 = Contact(WebUrl='Cheddar Talk', phoneNumber='Thoughts on cheese.',Email='nanana')
 
-        #Coworking_instance = Coworking.set(Contact=b2)
+        try:
         
-        return Response({"msg":"post"},status=200)
+          b2 = Contact.objects.create(WebUrl='Cheddar Talk', phoneNumber='Thoughts on cheese.',Email='nanana')
+
+          Coworking_instance = Coworking(Contact=b2)
+          Coworking_instance.save()
+          
+          #example
+          ringo = Person.objects.create(name="Ringo Starr")
+          paul = Person.objects.create(name="Paul McCartney")
+          beatles = Group.objects.create(name="The Beatles")
+          m1 = Membership(person=ringo, group=beatles,
+              invite_reason="Needed a new drummer.")
+          #m1.save()
+          #example
+
+          
+          Contact_arrray = Contact.objects.all()
+          Coworking_arrray = Coworking.objects.all()
+          serialized_obj = serializers.serialize('json', [ Coworking_arrray[0], ])
+          #serialized_obj = serializers.serialize('json', [ Contact_arrray[0], ])
+
+          Contact_instance = Contact.objects.filter(pk=Contact_arrray[1].pk)
+          #serialized_obj = serializers.serialize('json', [ Contact_instance.first(), ])
+          return Response({serialized_obj},status=200)
+
+        except Exception as e:
+
+          return Response({"error":str(e)},status=400)
