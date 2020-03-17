@@ -218,7 +218,7 @@ def Test(request):
           "openingHours": "datetime"
         },
         {
-          "deskTypeName": "Conference room B",
+          "conferenceRoomName": "Conference room B",
           "totalPlaces": 200,
           "pricePerDay": "null",
           "pricePerWeek": "null",
@@ -248,7 +248,18 @@ def Test(request):
           First_coworking = coworkings[0]
 
           contact_test = First_coworking["contact"]
-
+          description_test = First_coworking["description"]
+          location_test = First_coworking["location"]
+          services_test = First_coworking["services"]
+          meetingRooms_test = First_coworking["meetingRooms"]
+          desks_test = First_coworking["desks"]
+          conferenceRooms_test = First_coworking["conferenceRooms"]
+          
+          
+          
+          
+          
+          
           # GET DATA
 
           #Create Contact
@@ -279,26 +290,22 @@ def Test(request):
           
           #b2 = Contact.objects.create(WebUrl='Cheddar Talk', phoneNumber='Thoughts on cheese.',Email='nanana')
 
+
+
           #Coworking create
           Coworking_instance = Coworking(Contact=contact_to_save)
           Coworking_instance.save()
           #Coworking create
 
 
-          #example
-          ringo = Person.objects.create(name="Ringo Starr")
-          paul = Person.objects.create(name="Paul McCartney")
-          beatles = Group.objects.create(name="The Beatles")
-          m1 = Membership(person=ringo, group=beatles,
-              invite_reason="Needed a new drummer.")
-          #m1.save()
-          #example
+          
 
           # Busqueda
 
           #Contact_arrray = Contact.objects.all()
           Coworking_arrray = Coworking.objects.all()
           serialized_obj = serializers.serialize('json', [ Coworking_arrray[0].Contact.socialMedia, ])
+          serialized_obj = serializers.serialize('json', [ Coworking_arrray[0], ])
           #Coworking_instance_search = Coworking.objects.filter(pk=Coworking_arrray[0].pk)
           #serialized_obj = serializers.serialize('json', [ Coworking_instance_search.first().Contact, ])
 
