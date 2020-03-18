@@ -172,16 +172,16 @@ def Test(request):
           "name": "Meeting Room A",
           "capacity": 20,
           "pricePerDay": 100,
-          "pricePerWeek": "null",
-          "pricePerMonth": "null",
+          "pricePerWeek": None,
+          "pricePerMonth": None,
           "description": "A nice meeting room",
           "openingHours": "datetime"
         },
         {
           "name": "Meeting Room A",
           "capacity": 12,
-          "pricePerDay": "null",
-          "pricePerWeek": "null",
+          "pricePerDay": None,
+          "pricePerWeek": None,
           "pricePerMonth": 900,
           "description": "Nicest meeting room",
           "openingHours": "datetime"
@@ -192,16 +192,16 @@ def Test(request):
           "deskTypeName": "Desk type A",
           "totalPlaces": 100,
           "pricePerDay": 40,
-          "pricePerWeek": "null",
-          "pricePerMonth": "null",
+          "pricePerWeek": None,
+          "pricePerMonth": None,
           "description": "A beautiful desk",
           "openingHours": "datetime"
         },
         {
           "deskTypeName": "Desk type B",
           "totalPlaces": 20,
-          "pricePerDay": "null",
-          "pricePerWeek": "null",
+          "pricePerDay": None,
+          "pricePerWeek": None,
           "pricePerMonth": 300,
           "description": "A more beautiful desk",
           "openingHours": "datetime"
@@ -211,17 +211,17 @@ def Test(request):
         {
           "conferenceRoomName": "Conference room A",
           "totalPlaces": 50,
-          "pricePerDay": "200",
-          "pricePerWeek": "null",
-          "pricePerMonth": "null",
+          "pricePerDay": 200,
+          "pricePerWeek": None,
+          "pricePerMonth": None,
           "description": "A beautiful meeting room",
           "openingHours": "datetime"
         },
         {
           "conferenceRoomName": "Conference room B",
           "totalPlaces": 200,
-          "pricePerDay": "null",
-          "pricePerWeek": "null",
+          "pricePerDay": None,
+          "pricePerWeek": None,
           "pricePerMonth": 8000,
           "description": "A more beautiful meeting room",
           "openingHours": "datetime"
@@ -288,17 +288,80 @@ def Test(request):
           contact_to_save = Contact.objects.create(WebUrl=contact_test["webURL"], phoneNumber=contact_test["phoneNumber"],Email=contact_test["email"],socialMedia=SocialMedia_to_save)
           #Create Contact
           
-          #b2 = Contact.objects.create(WebUrl='Cheddar Talk', phoneNumber='Thoughts on cheese.',Email='nanana')
+          #Create Description
+
+          description_to_save = description.objects.create(name=description_test["name"],description=description_test["description"],openingDate=description_test["openingDate"])
+
+
+          #Create Description
+
+          #Create location
+
+          location_to_save = location.objects.create(provinceCode=location_test["provinceCode"],munipalityCode=location_test["provinceCode"],streetCode=location_test["provinceCode"],postalCode=location_test["provinceCode"],latitude=location_test["provinceCode"],longitude=location_test["provinceCode"])
+
+          #Create location
+
+          #Create services
+
+          basicServices_instance = services_test["basicServices"]
+          communityServices_instance = services_test["communityServices"]
+          relaxServices_instance = services_test["relaxServices"]
+
+          basicServices_to_save = basicServices.objects.create(hasWifi=basicServices_instance["hasWifi"],hasClimatization=basicServices_instance["hasClimatization"],is24h=basicServices_instance["is24h"],hasCoffe=basicServices_instance["hasCoffe"])
+          communityServices_to_save = communityServices.objects.create(hasEvents=communityServices_instance["hasEvents"],hasWorkshops=communityServices_instance["hasWorkshops"],hasAccelerator=communityServices_instance["hasAccelerator"],hasIncubator=communityServices_instance["hasIncubator"])
+          relaxServices_to_save = relaxServices.objects.create(hasTerrace=relaxServices_instance["hasTerrace"],hasChillOutArea=relaxServices_instance["hasChillOutArea"])
+
+          services_to_save = services.objects.create(basicServices=basicServices_to_save,communityServices=communityServices_to_save,relaxServices=relaxServices_to_save)
+          #Create services
+
+          #Create meetingRooms
+          meetingRooms_instance = meetingRooms_test
+          meetingrooms_to_save = meetingRooms.objects.create()
+          for json in meetingRooms_instance:
+            
+            meetingRoom_to_save = meetingRoom.objects.create(name=json["name"],capacity=json["capacity"],pricePerDay=json["pricePerDay"],pricePerWeek=json["pricePerWeek"],pricePerMonth=json["pricePerMonth"],description=json["description"],openingHours=json["openingHours"]) 
+            
+            meetingrooms_to_save.rooms.add(meetingRoom_to_save)
+
+          #Create meetingRooms
+
+          #Create desk
+
+          desk_instance = desks_test
+          desks_to_save = desks.objects.create()
+
+          for json in desk_instance:
+            
+            desk_to_save = desk.objects.create(deskTypeName=json["deskTypeName"],pricePerDay=json["pricePerDay"],pricePerWeek=json["pricePerWeek"],pricePerMonth=json["pricePerMonth"],description=json["description"],openingHours=json["openingHours"],totalPlaces=json["totalPlaces"]) 
+            
+            desks_to_save.rooms.add(desk_to_save)
+
+          #Create desk
+
+          #Create conferenceRooms
+
+          conferenceRooms_instance = conferenceRooms_test
+          conferenceRooms_to_save = conferenceRooms.objects.create()
+
+          for json in conferenceRooms_instance:
+            
+            conferenceRoom_to_save = conferenceRoom.objects.create(conferenceRoomName=json["conferenceRoomName"],pricePerDay=json["pricePerDay"],pricePerWeek=json["pricePerWeek"],pricePerMonth=json["pricePerMonth"],description=json["description"],openingHours=json["openingHours"],totalPlaces=json["totalPlaces"]) 
+            
+            conferenceRooms_to_save.rooms.add(conferenceRoom_to_save)
+
+          #Create conferenceRooms
+
+          
 
 
 
           #Coworking create
-          Coworking_instance = Coworking(Contact=contact_to_save)
+          Coworking_instance = Coworking(Contact=contact_to_save,description=description_to_save,location=location_to_save,services=services_to_save,meetingRooms=meetingrooms_to_save,desks=desks_to_save,conferenceRooms=conferenceRooms_to_save)
           Coworking_instance.save()
           #Coworking create
 
 
-          
+          return Response({"MSG":"hasta aqui bien"},status=200)
 
           # Busqueda
 
