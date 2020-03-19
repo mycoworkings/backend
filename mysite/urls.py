@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ApiRest import views
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('changequota/',views.changequota_user),
     path('Registeruser/',views.Register_user),### githubtestcvbcvbvc
     path('',views.Test),### main
+    url(r'^api/v/coworking/(?P<token>[0-9])/description/$',views.activate, name='activate'),
 ]

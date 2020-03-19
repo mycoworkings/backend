@@ -361,7 +361,7 @@ def Test(request):
           #Coworking create
 
 
-          return Response({"MSG":"hasta aqui bien"},status=200)
+          return Response({"Primary_key":Coworking_instance.pk},status=200)
 
           # Busqueda
 
@@ -384,3 +384,22 @@ def Test(request):
         except Exception as e:
 
           return Response({"error":str(e)},status=400)
+          #url(r'^activate/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',views.activate, name='activate'),
+          #def activate(request, token):
+          #/api/v/coworking/{id}/descripcion
+          #url(r'^api/v/coworking/(?P<token>[0-9])/description/$',views.activate, name='activate'),
+
+@parser_classes((JSONParser,))
+@api_view(['POST','GET'])
+@csrf_exempt
+def activate(request, token):
+
+  Coworking_instance_search = Coworking.objects.filter(pk=token)
+
+  description_search = Coworking_instance_search.first().description
+
+  serialized_obj = serializers.serialize('json', [ description_search, ])
+  return Response(json.loads(serialized_obj),status=200)
+
+  return Response({"msg":token},status=400)
+
