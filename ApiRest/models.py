@@ -42,8 +42,8 @@ class location(models.Model):
      munipalityCode = models.IntegerField()
      streetCode = models.IntegerField()
      postalCode = models.CharField(max_length=128)
-     latitude = models.IntegerField()
-     longitude = models.IntegerField()
+     latitude = models.FloatField()
+     longitude = models.FloatField()
 
 
 class basicServices(models.Model):
