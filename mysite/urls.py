@@ -24,6 +24,7 @@ urlpatterns = [
     path('changequota/',views.changequota_user),
     path('Registeruser/',views.Register_user),### githubtestcvbcvbvc
     path('',views.Test),### main
-    url(r'^api/v/coworking/(?P<token>[0-9])/description/$',views.activate, name='activate'),
-    url(r'^api/v/coworking/(?P<token>[0-9])/$',views.GetCoworking, name='activate'),
+    url(r'^api/v/coworking/(?P<token>[1-9][0-9]*)/description/$',views.activate, name='activate'),
+    url(r'^api/v/coworking/(?P<token>[1-9][0-9]*)/$',views.GetCoworking, name='activate'),
+    path('AllCoworkings/',views.AllCoworkings),
 ]
