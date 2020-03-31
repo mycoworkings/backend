@@ -434,3 +434,62 @@ def AllCoworkings (request):
   Final_response = GetCoworking_function(2)
 
   return Response(Array_coworkings,status=200)
+
+
+@parser_classes((JSONParser,))
+@api_view(['POST','GET'])
+@csrf_exempt
+def delete(request):
+    
+    if request.method == 'GET':
+
+        return Response({"id":5})
+
+
+    if request.method == 'POST':
+
+        try:
+          # GET DATA
+          id_pk = request.data.get('id', None)
+
+          a = Coworking.objects.get(pk = id_pk)
+          a.delete()
+
+          return Response({"id_deleted":id_pk})
+
+        except Exception as e:
+
+          return Response({"error":str(e)})
+
+
+@parser_classes((JSONParser,))
+@api_view(['POST','GET'])
+@csrf_exempt
+def edit(request):
+    
+    if request.method == 'GET':
+
+        return Response({"id":5,"description": {
+        "openingDate": "openingdatehere",
+        "description": "description_here",
+        "name": "namehere"
+    },})
+
+
+    if request.method == 'POST':
+
+        try:
+          # GET DATA
+          id_pk = request.data.get('id', None)
+          description_test = request.data.get('description', None)
+          description_to_save = description.objects.create(name=description_test['name'],description=description_test["description"],openingDate=description_test["openingDate"])
+
+          a = Coworking.objects.get(pk = id_pk)
+          a.description = description_to_save
+          a.save()
+
+          return Response({"id_edited":id_pk})
+
+        except Exception as e:
+
+          return Response({"error":str(e)})
